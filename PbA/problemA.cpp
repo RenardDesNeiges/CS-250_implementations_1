@@ -121,25 +121,6 @@
             }
         }
 
-        // for(std::int64_t i = 0; i<n;i++){std::cout << w[i] << " ";}
-        // std::cout << std::endl;
-        // for(std::int64_t i = 0; i<n;i++){std::cout << h[i] << " ";}
-        // std::cout << std::endl;
-        // for(std::int64_t i = 0; i<n;i++){std::cout << c[i] << " ";}
-        // std::cout << std::endl;
-        // for(std::int64_t i = 0; i<k;i++){std::cout << indices[i] << " ";}
-        // std::cout << std::endl;
-
-        
-
-        // for(std::int64_t i = 0; i<n+1; i++){
-        //     for(std::int64_t j = 0; j<m+1;j++){
-        //         std::cout << "(" << j << "," << i << "):"<< maxVal[i*n+j] << " ";
-        //     }
-        //     std::cout << std::endl;
-        // }
-        // std::cout << std::endl << "STARTING ALGORITHM" << std::endl<< std::endl;
-
         std::cout << knapsack(maxVal,m,w,h,c,indices,m,n-1,n) << std::endl;
 
         return EXIT_SUCCESS;

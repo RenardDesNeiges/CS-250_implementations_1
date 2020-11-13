@@ -87,10 +87,10 @@ int main() {
     std::int64_t k = splitLine.at(2);
 
     //getting the values from the k following lines
-    std::int64_t w [n+1];
-    std::int64_t h [n+1];
-    std::int64_t c [n+1];
-    std::int64_t indices [k+1];
+    std::int64_t* w = new std::int64_t[n+1];
+    std::int64_t* h = new std::int64_t[n+1];
+    std::int64_t* c = new std::int64_t[n+1];
+    std::int64_t* indices = new std::int64_t[k+1];
 
     std::int64_t accInd = 0;
     std::int64_t acc = 0;

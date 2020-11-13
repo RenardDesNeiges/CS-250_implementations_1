@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include<vector>
-#include<set>
 
 std::vector<long> splitStringByChar(std::string str, char split)
 {
@@ -25,59 +24,125 @@ std::vector<long> splitStringByChar(std::string str, char split)
     return out;
 }
 
-//bad implementation (not dynamic programming)
-long knapsacRec(std::vector<int> w,std::vector<int> h, std::vector<int> c, std::set<int> k, int m, int n){
-    if(n <= 0){
+std::int64_t knapsack(std::int64_t max[],std::int64_t maxM,std::int64_t w[],std::int64_t h[],std::int64_t c[],std::int64_t i[], std::int64_t m, std::int64_t n,std::int64_t maxN){
+    
+    if(n<0){
         return 0;
     }
-    if (w.at(n-1)>m || k.find(c.at(n-1)) != k.end() )
-    {
-        return knapsacRec(w,h,c,k,m,n-1);
+    else if(w[n]>m){
+        if(n<1){
+            return 0;
+        }
+        if(max[(n-1)*maxM+m] == -1){
+            max[(n-1)*maxM+m] = knapsack(max,maxM,w,h,c,i,m,n-1,maxN);
+        }
+        return max[(n-1)*maxM+m];
     }
     else{
-        std::set<int> nK = k;
-        nK.insert((int) c.at(n-1));
-        long take = h.at(n-1) + knapsacRec(w,h,c,nK,m-w.at(n-1),n-1);
-        long leave = knapsacRec(w,h,c,k,m,n-1);
-        if(take>=leave){
-            return take;
+
+        std::int64_t take = 0;
+
+        if(c[n]-1 < 0){
+            take = h[n];
+        }
+        else{
+            std::int64_t nm = m-w[n];
+            std::int64_t nn = i[c[n]-1];
+            if(max[nn*maxM+nm] == -1){
+                max[nn*maxM+nm] = knapsack(max,maxM,w,h,c,i,nm,nn,maxN);   
+            }
+            take = h[n] + max[nn*maxM+nm];
+        }
+        if(max[(n-1)*maxM+m] == -1){
+            max[(n-1)*maxM+m] = knapsack(max,maxM,w,h,c,i,m,n-1,maxN);
+        }
+        std::int64_t leave;
+        if(n < 1){
+            leave = 0;
+        }
+        else{
+            leave = max[(n-1)*maxM+m];
+        }
+        if(leave > take){
+            return leave;
         }
         else
         {
-            return leave;
+            return take;
         }
         
     }
+    
 }
 
 int main() {
     // getting the inputs from the input buffer
 
+    std::cout << "STILL GOOD 1 " << std::endl;
+
     //getting the parameters from the first line
     std::string line;
     std::getline(std::cin, line);
     std::vector<long> splitLine = splitStringByChar(line,' ');
-    int n = splitLine.at(0);
-    int m = splitLine.at(1);
-    int k = splitLine.at(2);
+    std::int64_t n = splitLine.at(0);
+    std::int64_t m = splitLine.at(1);
+    std::int64_t k = splitLine.at(2);
+
+    std::cout << "STILL GOOD 2 " << std::endl;
 
     //getting the values from the k following lines
-    std::vector<int> w;
-    std::vector<int> h;
-    std::vector<int> c;
+    std::int64_t w [n+1];
+    std::int64_t h [n+1];
+    std::int64_t c [n+1];
+    std::int64_t indices [k+1];
 
-    for(int i = 0; i<k; i++){
+    std::int64_t accInd = 0;
+    std::int64_t acc = 0;
+    
+    for(std::int64_t i = 0; i<k; i++){
         std::getline(std::cin, line);   
         splitLine = splitStringByChar(line,' ');
-        
-        for(int j = 0; j<splitLine.at(0);j++){
-            w.push_back(splitLine.at(1+2*j));
-            h.push_back(splitLine.at(2+2*j));
-            c.push_back(i);
+        accInd += splitLine.at(0);
+        indices[i]=accInd-1;
+        for(std::int64_t j = 0; j<splitLine.at(0);j++){
+            w[acc] = splitLine.at(1+2*j);
+            h[acc] = splitLine.at(2+2*j);
+            c[acc] = i;
+            acc += 1;
         }
-    }   
-  
-    std::set<int> kV;
-    std::cout << knapsacRec(w,h,c,kV,m,n) << std::endl;
+    }
+
+    std::cout << "STILL GOOD 3 " << std::endl;
+
+    std::int64_t max[(n+1)*(m+1)];
+    for(std::int64_t i = 0; i<n+1; i++){
+        for(std::int64_t j = 0; j<m+1;j++){
+            max[i*(m+1)+j] = -1;
+        }
+    }
+
+    std::cout << "STILL GOOD 3 " << std::endl;
+
+    for(std::int64_t i = 0; i<n;i++){std::cout << w[i] << " ";}
+    std::cout << std::endl;
+    for(std::int64_t i = 0; i<n;i++){std::cout << h[i] << " ";}
+    std::cout << std::endl;
+    for(std::int64_t i = 0; i<n;i++){std::cout << c[i] << " ";}
+    std::cout << std::endl;
+    for(std::int64_t i = 0; i<k;i++){std::cout << indices[i] << " ";}
+    std::cout << std::endl;
+
+    std::cout << "m=" << m << ",n=" << n << std::endl;
+
+    for(std::int64_t i = 0; i<n+1; i++){
+        for(std::int64_t j = 0; j<m+1;j++){
+            std::cout << "(" << j << "," << i << "):"<< max[i*n+j] << " ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl << "STARTING ALGORITHM" << std::endl<< std::endl;
+
+    std::cout << knapsack(max,m,w,h,c,indices,m,n-1,n) << std::endl;
+
     return EXIT_SUCCESS;
 }

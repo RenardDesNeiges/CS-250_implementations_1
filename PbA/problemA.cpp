@@ -78,8 +78,6 @@ std::int64_t knapsack(std::int64_t max[],std::int64_t maxM,std::int64_t w[],std:
 int main() {
     // getting the inputs from the input buffer
 
-    std::cout << "STILL GOOD 1 " << std::endl;
-
     //getting the parameters from the first line
     std::string line;
     std::getline(std::cin, line);
@@ -87,8 +85,6 @@ int main() {
     std::int64_t n = splitLine.at(0);
     std::int64_t m = splitLine.at(1);
     std::int64_t k = splitLine.at(2);
-
-    std::cout << "STILL GOOD 2 " << std::endl;
 
     //getting the values from the k following lines
     std::int64_t w [n+1];
@@ -112,37 +108,35 @@ int main() {
         }
     }
 
-    std::cout << "STILL GOOD 3 " << std::endl;
 
-    std::int64_t max[(n+1)*(m+1)];
+    int maxKey = (n+1)*(m+1);
+    std::int64_t*  maxVal = new std::int64_t[(n+1)*(m+1)];
     for(std::int64_t i = 0; i<n+1; i++){
         for(std::int64_t j = 0; j<m+1;j++){
-            max[i*(m+1)+j] = -1;
+            maxVal[i*(m+1)+j] = -1;
         }
     }
 
-    std::cout << "STILL GOOD 3 " << std::endl;
+    // for(std::int64_t i = 0; i<n;i++){std::cout << w[i] << " ";}
+    // std::cout << std::endl;
+    // for(std::int64_t i = 0; i<n;i++){std::cout << h[i] << " ";}
+    // std::cout << std::endl;
+    // for(std::int64_t i = 0; i<n;i++){std::cout << c[i] << " ";}
+    // std::cout << std::endl;
+    // for(std::int64_t i = 0; i<k;i++){std::cout << indices[i] << " ";}
+    // std::cout << std::endl;
 
-    for(std::int64_t i = 0; i<n;i++){std::cout << w[i] << " ";}
-    std::cout << std::endl;
-    for(std::int64_t i = 0; i<n;i++){std::cout << h[i] << " ";}
-    std::cout << std::endl;
-    for(std::int64_t i = 0; i<n;i++){std::cout << c[i] << " ";}
-    std::cout << std::endl;
-    for(std::int64_t i = 0; i<k;i++){std::cout << indices[i] << " ";}
-    std::cout << std::endl;
+    
 
-    std::cout << "m=" << m << ",n=" << n << std::endl;
+    // for(std::int64_t i = 0; i<n+1; i++){
+    //     for(std::int64_t j = 0; j<m+1;j++){
+    //         std::cout << "(" << j << "," << i << "):"<< maxVal[i*n+j] << " ";
+    //     }
+    //     std::cout << std::endl;
+    // }
+    // std::cout << std::endl << "STARTING ALGORITHM" << std::endl<< std::endl;
 
-    for(std::int64_t i = 0; i<n+1; i++){
-        for(std::int64_t j = 0; j<m+1;j++){
-            std::cout << "(" << j << "," << i << "):"<< max[i*n+j] << " ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl << "STARTING ALGORITHM" << std::endl<< std::endl;
-
-    std::cout << knapsack(max,m,w,h,c,indices,m,n-1,n) << std::endl;
+    std::cout << knapsack(maxVal,m,w,h,c,indices,m,n-1,n) << std::endl;
 
     return EXIT_SUCCESS;
 }

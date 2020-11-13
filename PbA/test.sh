@@ -1,2 +1,21 @@
-g++ problemA.cpp -o problemA.x
-./problemA.x < shouldReturn37.txt
+g++ -std=c++11 problemA.cpp -o problemA.x
+./problemA.x < test/01.txt
+./problemA.x < test/02.txt
+./problemA.x < test/03.txt
+./problemA.x < test/04.txt
+./problemA.x < test/05.txt
+./problemA.x < test/06.txt
+./problemA.x < test/07.txt
+./problemA.x < test/08.txt
+./problemA.x < test/09.txt
+./problemA.x < test/10.txt
+./problemA.x < test/11.txt
+./problemA.x < test/12.txt
+./problemA.x < test/13.txt
+./problemA.x < test/14.txt
+./problemA.x < test/15.txt
+./problemA.x < test/16.txt
+./problemA.x < test/17.txt
+./problemA.x < test/18.txt
+./problemA.x < test/19.txt
+./problemA.x < test/20.txt

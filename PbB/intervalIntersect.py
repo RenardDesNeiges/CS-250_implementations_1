@@ -1,42 +1,37 @@
 import sys
 import copy
 
+def mergeAndCount(inputArray):
+    if len(inputArray) == 1:
+        return inputArray, 0
+    else:
+        
+        a = inputArray[:len(inputArray)//2]
+        b = inputArray[len(inputArray)//2:]
+        a, ai = mergeSortInversions(a)
+        b, bi = mergeSortInversions(b)
+        c = []
+        i = 0
+        j = 0
+        inversions = 0 + ai + bi
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            c.append(a[i])
+            i += 1
+        else:
+            c.append(b[j])
+            j += 1
+            inversions += (len(a)-i)
+    c += a[i:]
+    c += b[j:]
+    return c, inversions
+
 lnb = 0
 
 n = 0
 a = []
 b = []   
 
-def mergeAndCount(a,b):
-    i = 0
-    j = 0
-    c=[]
-    count = 0
-    while len(a)>0 and len(b)>0:
-        c.append(min(a[0],b[0]))
-        if b[0] < a[0]:
-            count = count + len(a)
-            b.pop(0)
-        else:
-            a.pop(0)
-
-    if len(a)<=0:
-        c.extend(b)
-    else:
-        c.extend(a)
-
-    return (count,c)
-
-def sortAndCount(l):
-    if len(l) <= 1:
-        return (0,l)
-    else:
-        a = l[:len(l)//2]
-        b = l[len(l)//2:]
-        (ra,a) = sortAndCount(a)
-        (rb,b) = sortAndCount(b)
-        (r,l) = mergeAndCount(a,b)
-    return(ra+rb+r,l)
 
 for line in sys.stdin:
     buffer = line.split()
@@ -58,11 +53,12 @@ intervals.sort(key=(lambda x : x[0]))
 
 b = [el[1] for el in intervals]
 
+
 #acc = 0
 
 #print(n)
 
-print(sortAndCount(b)[0])
+print(mergeSortInversions(b)[1])
 
 # for i in range(len(intervals)):
 #     for j in range(i,len(intervals)):
